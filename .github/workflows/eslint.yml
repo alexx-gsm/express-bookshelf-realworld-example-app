@@ -5,3 +5,19 @@ on:
     branches: [main]
   pull_request:
     branches: [main]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkouts@v2
+      - name: Install NVM
+        run: curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash
+      - name: Install Node.js
+        env:
+          NODE_VERSION: 14.18.3
+        run: nvm install $NODE_VERSION
+      - name: Install dependencies
+        run: npm install
+      - name: Lint source code with ESLint
+        run: npm run lint
